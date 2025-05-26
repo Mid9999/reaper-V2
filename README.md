@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1><img src="[💀]" alt="Reaper Emoji" width="35"> Reaper Discord Bot</h1>
+  <h1><img src="[💀]" alt="" width="35"> Reaper Discord Bot</h1>
   <br>
   <p><strong>A gay black discord bot.</strong></p>
   
