@@ -1,28 +1,17 @@
 <div align="center">
 
-  <h1><img src="utils/logo.jpg" alt="Lanya Logo" width="35"> Lanya2.0 Discord Bot</h1>
+  <h1><img src="[utils/logo.jpg](https://preview.redd.it/bad-to-the-bone-v0-gbxt4ko5q2ya1.jpg?auto=webp&s=fee58f8dfda8623eb8a8dd328262efb9a2f11be0)" alt="Lanya Logo" width="35"> Reaper Discord Bot</h1>
   <br>
-  <p><strong>An open-source Discord bot designed to enhance community interaction with a variety of engaging and useful features.</strong></p>
+  <p><strong>A gay black discord bot.</strong></p>
   
-  [![Discord](https://img.shields.io/discord/1342840214573416458?color=5865F2&logo=discord&logoColor=white)]([https://discord.gg/kAYpdenZ8b](https://discord.gg/TqFhzjmyjx))
-  [![License](https://img.shields.io/github/license/gaurav87565/Lanya-2.0)](LICENSE)
-  [![Stars](https://img.shields.io/github/stars/gaurav87565/Lanya-2.0?style=social)](https://github.com/gaurav87565/Lanya-2.0/stargazers)
+  [![Discord](https://img.shields.io/discord/1342840214573416458?color=5865F2&logo=discord&logoColor=white)]([[https://discord.gg/TqFhzjmyjx])
+  [![License](https://github.com/Mid9999))](LICENSE)
+  [![Stars](https://github.com/Mid9999))
 </div>
 
 ## ✨ About reaper
 
 Reap is a Discord bot built for one server named reaper that sells and makes vrc crashers
-
-## 🚀 Features
-
-- **🎉 Fun Commands** - Keep your community engaged with trivia, jokes, games, and more
-- **🛠️ Moderation Tools** - Maintain server order with comprehensive moderation capabilities
-- **🔧 Utility Functions** - Provide practical tools like calculators, translators, and weather reports
-- **🎮 Minecraft Integration** - Connect your Discord server with Minecraft through server status monitoring and skin visualization
-- **📈 Leveling System** - Encourage engagement with an XP-based leveling system
-- **🎁 Giveaways** - Host and manage giveaways with customizable requirements
-- **👋 Welcome System** - Greet new members with customizable welcome messages
-
 ## 🔍 Command Categories
 
 <details>
@@ -158,52 +147,6 @@ For any assistance, feature requests, or bug reports, join our official support 
 
   <a href="https://discord.gg/kAYpdenZ8b" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
-
-## 🔧 Quick Setup
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v16.9.0 or higher)
-- [MongoDB](https://www.mongodb.com/) database
-- [Discord Bot Token](https://discord.com/developers/applications)
-- Weather API key (for weather commands)
-
-### Installation
-
-1. **Clone the Repository**
-
-```bash
-git clone https://github.com/gaurav87565/Lanya-2.0.git
-cd Lanya
-```
-
-2. **Install Dependencies**
-
-```bash
-npm install
-```
-
-3. **Enter Your Configuration Details**
-
-The setup script will prompt you to enter:
-
-- Discord Bot Token
-- Client ID
-- Weather API Key
-- MongoDB Connection String
-
-4. **Start the Bot**
-
-```bash
-npm run start
-```
-
-For production environments:
-
-```bash
-npm run start:prod
-```
-
 ## 🧩 Project Structure
 
 ```
@@ -214,67 +157,6 @@ Lanya/
 ├── utils/              # Utility functions
 └── index.js            # Main entry point
 ```
-
-## 🛠️ Development
-
-### Adding New Commands
-
-1. Create a new command file in the appropriate category folder
-2. Use the command template structure
-3. Register the command in the command handler
-
-Example command structure:
-
-```javascript
-module.exports = {
-  name: 'commandname',
-  description: 'Command description',
-  options: [], // Slash command options
-  execute: async (interaction, client) => {
-    // Command code here
-  },
-};
-```
-
-## 🤲 Contributing
-
-Contributions are welcome and appreciated! Here's how you can contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add some amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
-
-Please make sure to update tests and documentation as appropriate.
-
-## 📜 Code of Conduct
-
-We strive to maintain a friendly, inclusive, and respectful community. Please follow these guidelines:
-
-- **Be Respectful**: Treat others with respect. Disagreements are okay, but be civil.
-- **Be Inclusive**: We welcome all contributions and encourage participation from everyone.
-- **Be Supportive**: Help others when they have questions and be open to feedback.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📋 Roadmap
-
-- [ ] Server logs system
-- [ ] Advanced auto-moderation features
-- [ ] Custom command creation interface
-- [ ] Web dashboard for easy configuration
-- [ ] Enhanced Minecraft integration features
-- [ ] Music playback capabilities
-- [ ] Role reaction system
-
-Have suggestions? Feel free to share them in our [Support Server](https://discord.gg/kAYpdenZ8b)!
-
----
-
-<div align="center">
-  Made with ❤️ by the DaPirates Development Team
-</div>
+by the devs of reaper
+reaper says thank you for trying to skid there code
+💀
