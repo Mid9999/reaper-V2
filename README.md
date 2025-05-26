@@ -11,7 +11,7 @@
 
 ## ✨ About Lanya
 
-Lanya is a Discord bot built to improve server engagement and provide useful tools for both administrators and members. With commands ranging from fun interactions to powerful moderation tools.
+Reap is a Discord bot built for one server named reaper that sells and makes vrc crashers
 
 ## 🚀 Features
 
