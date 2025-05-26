@@ -4,12 +4,12 @@
   <br>
   <p><strong>An open-source Discord bot designed to enhance community interaction with a variety of engaging and useful features.</strong></p>
   
-  [![Discord](https://img.shields.io/discord/1342840214573416458?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/kAYpdenZ8b)
+  [![Discord](https://img.shields.io/discord/1342840214573416458?color=5865F2&logo=discord&logoColor=white)]([https://discord.gg/kAYpdenZ8b](https://discord.gg/TqFhzjmyjx))
   [![License](https://img.shields.io/github/license/gaurav87565/Lanya-2.0)](LICENSE)
   [![Stars](https://img.shields.io/github/stars/gaurav87565/Lanya-2.0?style=social)](https://github.com/gaurav87565/Lanya-2.0/stargazers)
 </div>
 
-## ✨ About Lanya
+## ✨ About reaper
 
 Reap is a Discord bot built for one server named reaper that sells and makes vrc crashers
 
