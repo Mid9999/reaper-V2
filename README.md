@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1><img src="[utils/logo.jpg](https://preview.redd.it/bad-to-the-bone-v0-gbxt4ko5q2ya1.jpg?auto=webp&s=fee58f8dfda8623eb8a8dd328262efb9a2f11be0)" alt="Lanya Logo" width="35"> Reaper Discord Bot</h1>
+  <h1><img src="[💀]" alt="Reaper Emoji" width="35"> Reaper Discord Bot</h1>
   <br>
   <p><strong>A gay black discord bot.</strong></p>
   
