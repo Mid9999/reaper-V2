@@ -150,7 +150,7 @@ For any assistance, feature requests, or bug reports, join our official support 
 ## 🧩 Project Structure
 
 ```
-Lanya/
+Reaper/
 ├── commands/           # Command files organized by category
 ├── events/             # Event handler files
 ├── models/             # Database models
