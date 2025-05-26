@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1><img src="utils/logo.jpg" alt="Lanya Logo" width="35"> Lanya2.0 Discord Bot</h1>
+  <h1><img src="utils/logo.jpg" alt="Lanya Logo" width="35"> Reaper v2 Discord Bot</h1>
   <br>
   <p><strong>An open-source Discord bot designed to enhance community interaction with a variety of engaging and useful features.</strong></p>
   
