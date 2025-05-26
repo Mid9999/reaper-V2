@@ -141,10 +141,6 @@ Reap is a Discord bot built for one server named reaper that sells and makes vrc
   | `/nowplaying`  | Show information about the currently playing track                 |
 </details>
 
-## 🤝 Support Server
-
-For any assistance, feature requests, or bug reports, join our official support server:
-
   <a href="[https://discord.gg/ZYbNEQdpHB]" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
 
