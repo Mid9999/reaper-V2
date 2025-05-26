@@ -145,9 +145,8 @@ Reap is a Discord bot built for one server named reaper that sells and makes vrc
 
 For any assistance, feature requests, or bug reports, join our official support server:
 
-  <a href="https://discord.gg/kAYpdenZ8b" target="_blank">
+  <a href="[https://discord.gg/ZYbNEQdpHB]" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="discord logo"  />
-## 🧩 Project Structure
 
 ```
 Reaper/
