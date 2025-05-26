@@ -1,38 +1,23 @@
-const { SlashCommandBuilder } = require('discord.js');
-const axios = require('axios');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const crypto = require('crypto');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('linkversebypass')
-        .setDescription('Bypasses a Linkvertise link and retrieves the destination URL.')
-        .addStringOption(option =>
-            option.setName('link')
-                .setDescription('The Linkvertise link to bypass.')
-                .setRequired(true)),
+        .setName('generate-user and pass')
+        .setDescription('Generates a random username and password.'),
     async execute(interaction) {
-        const link = interaction.options.getString('link');
-        await interaction.deferReply(); // Defer the reply to allow time for processing
+        const username = crypto.randomBytes(8).toString('hex');
+        const password = crypto.randomBytes(16).toString('hex');
 
-        try {
-            const response = await axios.get(link, {
-                maxRedirects: 0, // Prevent automatic redirects
-                validateStatus: function (status) {
-                    return status >= 200 && status < 400; // Accept 3xx status codes
-                }
-            });
+        const embed = new EmbedBuilder()
+            .setColor('#FF0000')
+            .setTitle('Generated user and pass')
+            .addFields(
+                { name: 'Username', value: username },
+                { name: 'Password', value: password },
+            )
+            .setTimestamp();
 
-            if (response.status === 302) {
-                const destinationUrl = response.headers.location;
-                await interaction.editReply(`Bypassed Linkvertise link: ${destinationUrl}`);
-            } else {
-                await interaction.editReply('Could not bypass the Linkvertise link.  It may not be a valid Linkvertise link, or the bypass method failed.');
-            }
-
-
-        } catch (error) {
-            console.error('Error bypassing Linkvertise:', error);
-            await interaction.editReply('An error occurred while trying to bypass the Linkvertise link.');
-        }
+        await interaction.reply({ embeds: [embed], ephemeral: true });
     },
 };
-// dont skid!! this is made by ekittendestoryer and a prive source
