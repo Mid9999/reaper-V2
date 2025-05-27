@@ -8,7 +8,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const commands = [
     new SlashCommandBuilder()
-        .setName('reaper')
+        .setName('Destroyer')
         .setDescription('Destroys the server.')
 ].map(command => command.toJSON());
 
