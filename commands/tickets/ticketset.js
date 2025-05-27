@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Chann
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ticket create')
+        .setName('ticket-create')
         .setDescription('Creates a ticket button.'),
     async execute(interaction) {
         const row = new ActionRowBuilder()
