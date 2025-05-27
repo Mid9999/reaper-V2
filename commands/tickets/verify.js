@@ -3,20 +3,20 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('verify')
-		.setDescription('Adds a role to the user when they click the button.'),
+		.setDescription('Made by Ekittendestoryer.'),
 	async execute(interaction) {
 		const roleId = '1364219960364105728'; // Replace with the actual role ID
-		const roleName = 'person'; // Replace with the role Name
+		const roleName = '🌠'; // Replace with the role Name
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('add_role')
-					.setLabel(`🌠`)
+					.setLabel(`${roleName}`)
 					.setStyle(ButtonStyle.Primary),
 			);
 
 		await interaction.reply({
-			content: 'press the button down low to verify!',
+			content: 'Click the button below to verify!',
 			components: [row],
 		});
 
