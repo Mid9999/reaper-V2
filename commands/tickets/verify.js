@@ -2,38 +2,44 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('verify')
-		.setDescription('Creates a verification button.'),
+		.setName('addrole')
+		.setDescription('Adds a role to the user when they click the button.'),
 	async execute(interaction) {
-		const verifyButton = new ButtonBuilder()
-			.setCustomId('verify_button')
-			.setLabel('Verify')
-			.setStyle(ButtonStyle.Success);
-
+		const roleId = '1364219960364105728'; // Replace with the actual role ID
+		const roleName = 'person'; // Replace with the role Name
 		const row = new ActionRowBuilder()
-			.addComponents(verifyButton);
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('add_role')
+					.setLabel(`Get ${roleName}`)
+					.setStyle(ButtonStyle.Primary),
+			);
 
-		await interaction.reply({ content: 'Click the button to verify!', components: [row] });
+		await interaction.reply({
+			content: 'Click the button below to get the role!',
+			components: [row],
+		});
 
-		const collector = interaction.channel.createMessageComponentCollector({ time: 3600000 });
+		const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
 
 		collector.on('collect', async i => {
-			if (i.customId === 'verify_button') {
-				const role = interaction.guild.roles.cache.find(role => role.name === 'Verified'); // Replace 'Verified' with your role name
-				if (!role) {
-					return await i.reply({ content: 'Verification role not found.  Please contact an administrator.', ephemeral: true });
-				}
+			if (i.customId === 'add_role') {
+				const member = i.member;
 
 				try {
-					await i.member.roles.add(role);
-					await i.reply({ content: 'You have been verified!', ephemeral: true });
+					await member.roles.add(roleId);
+					await i.reply({ content: `Successfully added the ${roleName} role!`, ephemeral: true });
 				} catch (error) {
 					console.error('Failed to add role:', error);
-					await i.reply({ content: 'Failed to add role. Please contact an administrator.', ephemeral: true });
+					await i.reply({ content: 'Failed to add the role. Please contact an administrator.', ephemeral: true });
 				}
 			}
 		});
 
-		collector.on('end', collected => console.log(`Collected ${collected.size} interactions.`));
+		collector.on('end', collected => {
+			if (collected.size === 0) {
+				interaction.editReply({ content: 'The button is no longer active.', components: [] });
+			}
+		});
 	},
 };
