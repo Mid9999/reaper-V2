@@ -1,40 +1,39 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('setup-verification')
-        .setDescription('Sets up a verification system in a specified channel.')
-        .addChannelOption(option =>
-            option.setName('channel')
-                .setDescription('The channel to send the verification message to.')
-                .setRequired(true)
-                .addChannelTypes(ChannelType.GuildText))
-        .addRoleOption(option =>
-            option.setName('role')
-                .setDescription('The role to give to verified members.')
-                .setRequired(true)),
-    async execute(interaction) {
-        const channel = interaction.options.getChannel('channel');
-        const role = interaction.options.getRole('role');
+	data: new SlashCommandBuilder()
+		.setName('verify')
+		.setDescription('Creates a verification button.'),
+	async execute(interaction) {
+		const verifyButton = new ButtonBuilder()
+			.setCustomId('verify_button')
+			.setLabel('Verify')
+			.setStyle(ButtonStyle.Success);
 
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
-            return interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
-        }
+		const row = new ActionRowBuilder()
+			.addComponents(verifyButton);
 
-        const verifyButton = new ButtonBuilder()
-            .setCustomId('verify')
-            .setLabel('Verify')
-            .setStyle(ButtonStyle.Success);
+		await interaction.reply({ content: 'Click the button to verify!', components: [row] });
 
-        const row = new ActionRowBuilder()
-            .addComponents(verifyButton);
+		const collector = interaction.channel.createMessageComponentCollector({ time: 3600000 });
 
-        try {
-            await channel.send({ content: 'Click the button below to verify yourself!', components: [row] });
-            await interaction.reply({ content: `Verification system setup in ${channel} with role ${role}.`, ephemeral: true });
-        } catch (error) {
-            console.error('Error sending message:', error);
-            await interaction.reply({ content: 'There was an error setting up the verification system. Please check the bot\'s permissions in the specified channel.', ephemeral: true });
-        }
-    },
+		collector.on('collect', async i => {
+			if (i.customId === 'verify_button') {
+				const role = interaction.guild.roles.cache.find(role => role.name === 'Verified'); // Replace 'Verified' with your role name
+				if (!role) {
+					return await i.reply({ content: 'Verification role not found.  Please contact an administrator.', ephemeral: true });
+				}
+
+				try {
+					await i.member.roles.add(role);
+					await i.reply({ content: 'You have been verified!', ephemeral: true });
+				} catch (error) {
+					console.error('Failed to add role:', error);
+					await i.reply({ content: 'Failed to add role. Please contact an administrator.', ephemeral: true });
+				}
+			}
+		});
+
+		collector.on('end', collected => console.log(`Collected ${collected.size} interactions.`));
+	},
 };
