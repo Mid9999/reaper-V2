@@ -11,12 +11,12 @@ module.exports = {
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('add_role')
-					.setLabel(`Get ${roleName}`)
+					.setLabel(`🌠`)
 					.setStyle(ButtonStyle.Primary),
 			);
 
 		await interaction.reply({
-			content: 'Verify🌠!',
+			content: 'press the button down low to verify!',
 			components: [row],
 		});
 
