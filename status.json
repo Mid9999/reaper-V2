@@ -1,9 +1,9 @@
 {
   "interval": 30000,
   "status": {
-    "type": "WATCHING",
-    "state": "Gay men makeout.",
-    "backup_state": "with {userCount} users",
-    "url": "https://twitch.tv/lanya"
+    "type": "STREAMING",
+    "state": "V2.",
+    "backup_state": "reap status is down currently",
+    "url": "https://discord.gg/ZYbNEQdpHB"
   }
 }
