@@ -11,7 +11,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 const commands = [
     new SlashCommandBuilder()
-        .setName('reactrole')
+        .setName('react-role')
         .setDescription('Sets up a reaction role.')
         .addStringOption(option =>
             option.setName('message_id')
