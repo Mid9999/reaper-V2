@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
-    name: 'ip_lookup',
+    name: './ip_lookup',
     description: 'Looks up information about an IP address.',
     usage: '<ip address>',
     async execute(message, args) {
