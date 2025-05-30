@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('verify')
+    .setName('generalwelcomedetection')
     .setDescription('Toggles welcome message deletion in this channel.')
     .addBooleanOption(option =>
       option.setName('enabled')
