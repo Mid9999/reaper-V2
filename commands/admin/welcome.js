@@ -60,7 +60,7 @@ module.exports = {
       welcome.enabled = !welcome.enabled;
       await welcome.save();
       const toggleEmbed = new EmbedBuilder()
-        .setColor(welcome.enabled ? '#4CAF50' : '#FF5733')
+        .setColor(welcome.enabled ? '#000FF' : '#000FF')
         .setTitle('Welcome System')
         .setDescription(
           `The welcome system is now ${welcome.enabled ? 'enabled' : 'disabled'}. \n\n __**Note:** Please set the channel for sending the welcome greetings by using \`/welcome setchannel\`__`
@@ -76,7 +76,7 @@ module.exports = {
         });
       }
       const descriptionEmbed = new EmbedBuilder()
-        .setColor('#FFD700')
+        .setColor('#000FF')
         .setTitle('Set Custom Welcome Message')
         .setDescription(
           '**Please provide your custom welcome message. You can use the following placeholders:**\n\n' +
@@ -110,7 +110,7 @@ module.exports = {
         await welcome.save();
 
         const successEmbed = new EmbedBuilder()
-          .setColor('#4CAF50')
+          .setColor('#000FF')
           .setTitle('Custom Welcome Message Set')
           .setDescription(
             `Your welcome message has been updated to:\n${customDescription}`
@@ -127,7 +127,7 @@ module.exports = {
       collector.on('end', (collected, reason) => {
         if (reason === 'time') {
           const timeoutEmbed = new EmbedBuilder()
-            .setColor('#FF5733')
+            .setColor('#000FF')
             .setTitle('Timeout')
             .setDescription(
               'You took too long to provide a description. Please try again.'
@@ -153,7 +153,7 @@ module.exports = {
       await welcome.save();
 
       const channelEmbed = new EmbedBuilder()
-        .setColor('#4CAF50')
+        .setColor('#000FF')
         .setTitle('Welcome Channel Set')
         .setDescription(`The welcome channel has been set to ${channel}.`)
         .setTimestamp();
@@ -183,7 +183,7 @@ module.exports = {
         .replace(/{serverage}/g, `<t:${Math.floor(guild.createdAt / 1000)}:R>`);
 
       const testEmbed = new EmbedBuilder()
-        .setColor('#00BFFF')
+        .setColor('#000FF')
         .setTitle('Welcome Message Preview')
         .setDescription(description)
         .setFooter({
