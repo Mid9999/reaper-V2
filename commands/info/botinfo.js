@@ -37,7 +37,7 @@ module.exports = {
       .addFields(
         {
           name: 'Developer',
-          value: '```elm\nekittindestroyer & Reaper\n```',
+          value: '```elm\nIbuildmachines\n```',
           inline: true,
         },
         {
