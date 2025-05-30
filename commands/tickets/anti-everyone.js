@@ -4,7 +4,7 @@ let verifyEnabled = false;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('anti-@everyone')
+        .setName('anti-everyone')
         .setDescription('Toggles the verify system on or off.')
         .addBooleanOption(option =>
             option.setName('enabled')
