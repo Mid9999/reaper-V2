@@ -1,29 +1,34 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('message-autodelete')
-        .setDescription('deletes all messages thats not /verify.'),
-    async execute(interaction) {
-        await interaction.reply({ content: 'Verification channel setup!', ephemeral: true });
+        .setName('antispeak')
+        .setDescription('cant speak.')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels), // Requires Manage Channels permission
 
+    async execute(interaction) {
         const channel = interaction.channel;
 
-        const filter = m => m.content.startsWith('/') === false; // Messages that DON'T start with a slash
-        const collector = channel.createMessageCollector({ filter, time: 86400000 }); // Collect for 24 hours
+        // Initial response to the user
+        await interaction.reply({ content: 'This channel is now a verification channel. All user messages will be deleted.', ephemeral: true });
 
-        collector.on('collect', async m => {
-            try {
-                await m.delete();
-            } catch (error) {
-                console.error('Failed to delete message:', error);
+        // Function to delete user messages
+        const deleteUserMessages = async (message) => {
+            if (message.author.id !== interaction.client.user.id) {
+                try {
+                    await message.delete();
+                    console.log(`Deleted message from ${message.author.tag} in ${channel.name}`);
+                } catch (error) {
+                    console.error('Error deleting message:', error);
+                }
             }
-        });
+        };
 
-        collector.on('end', collected => {
-            console.log(`Collected ${collected.size} messages.`);
-            interaction.channel.send("Verification channel is no longer active.");
-
+        // Listen for new messages in the channel
+        interaction.client.on('messageCreate', async (message) => {
+            if (message.channel.id === channel.id) {
+                await deleteUserMessages(message);
+            }
         });
     },
 };
