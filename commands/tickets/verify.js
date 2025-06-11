@@ -9,7 +9,7 @@ module.exports = {
         const guild = interaction.guild;
 
         // Replace 'YOUR_ROLE_ID' with the actual ID of the role you want to assign.
-        const roleId = '1364219960364105728';
+        const roleId = '1382431077850939412';
 
         try {
             const role = await guild.roles.fetch(roleId);
