@@ -1,8 +1,8 @@
 {
   "interval": 30000,
   "status": {
-    "type": "STREAMING",
-    "state": "V2.",
+    "type": "Playing",
+    "state": "Toxicity",
     "backup_state": "reap status is down currently",
     "url": "https://discord.gg/ZYbNEQdpHB"
   }
