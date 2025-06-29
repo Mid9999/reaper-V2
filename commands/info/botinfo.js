@@ -37,7 +37,7 @@ module.exports = {
       .addFields(
         {
           name: 'Developer',
-          value: '```elm\nIbuildmachines\n```',
+          value: '```elm\nM & asianpeople15\n```',
           inline: true,
         },
         {
