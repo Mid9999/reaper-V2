@@ -1,24 +1,35 @@
 import discord
+from discord.commands import slash_command, Option
 from discord.ext import commands
+import asyncio
+import aiohttp
 
-BOT_TOKEN = "YOUR_BOT_TOKEN"
-WEBHOOK_URL = "YOUR_WEBHOOK_URL"
+class Spam(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+    @slash_command(name="spam", description="Spam a webhook with a custom message.")
+    async def spam(
+        self,
+        ctx: discord.ApplicationContext,
+        webhook_url: Option(str, "The webhook URL to spam."),
+        message: Option(str, "The message to send."),
+        amount: Option(int, "The amount of messages to send.", default=5)
+    ):
+        """Spam a webhook with a custom message."""
+        await ctx.defer()
+        
+        async with aiohttp.ClientSession() as session:
+            for _ in range(amount):
+                data = {"content": message}
+                async with session.post(webhook_url, json=data) as response:
+                    if response.status >= 400:
+                        await ctx.respond(f"Failed to send message. Status code: {response.status}", ephemeral=True)
+                        return
+                await asyncio.sleep(0.5)  # Add a small delay to avoid rate limits
 
-@bot.slash_command(name="spam", description="Spams a webhook with a custom text.")
-async def spam(ctx, text: str, num_times: int):
-    """
-    Spams a webhook with a custom text.
+        await ctx.respond(f"Successfully spammed the webhook {amount} times.", ephemeral=True)
 
-    Args:
-        ctx: The context of the command.
-        text: The text to spam.
-        num_times: The number of times to spam the webhook.
-    """
-    webhook = discord.Webhook.from_url(WEBHOOK_URL, session=bot.client.session) 
-    for _ in range(num_times):
-        await webhook.send(text)
-    await ctx.respond(f"Spammed the webhook {num_times} times with the text: {text}")
 
-bot.run(BOT_TOKEN)
+def setup(bot):
+    bot.add_cog(Spam(bot))
