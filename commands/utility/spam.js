@@ -1,36 +1,24 @@
 import discord
 from discord.ext import commands
 
-class SpamCommand(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+BOT_TOKEN = "YOUR_BOT_TOKEN"
+WEBHOOK_URL = "YOUR_WEBHOOK_URL"
 
-    @commands.slash_command(name="spam", description="Spams a message to a webhook (admin only).")
-    @commands.has_permissions(administrator=True)
-    async def spam(self, ctx, webhook_id: str, message: str, amount: int):
-        """Spams a message to a webhook.
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
-        Args:
-            ctx: The context of the command.
-            webhook_id: The ID of the webhook to send the message to.
-            message: The message to send.
-            amount: The amount of messages you want to send
-        """
-        try:
-            webhook = await self.bot.fetch_webhook(int(webhook_id))
-        except discord.NotFound:
-            await ctx.respond("Invalid Webhook ID.")
-            return
-        except discord.InvalidArgument:
-            await ctx.respond("Invalid Webhook ID.")
-            return
-        except discord.HTTPException:
-            await ctx.respond("Could not fetch webhook.")
-            return
+@bot.slash_command(name="spam", description="Spams a webhook with a custom text.")
+async def spam(ctx, text: str, num_times: int):
+    """
+    Spams a webhook with a custom text.
 
-        await ctx.respond(f"Spamming {message} {amount} times!", ephemeral=True)
-        for _ in range(amount):
-            await webhook.send(message)
+    Args:
+        ctx: The context of the command.
+        text: The text to spam.
+        num_times: The number of times to spam the webhook.
+    """
+    webhook = discord.Webhook.from_url(WEBHOOK_URL, session=bot.client.session) 
+    for _ in range(num_times):
+        await webhook.send(text)
+    await ctx.respond(f"Spammed the webhook {num_times} times with the text: {text}")
 
-def setup(bot):
-    bot.add_cog(SpamCommand(bot))
+bot.run(BOT_TOKEN)
